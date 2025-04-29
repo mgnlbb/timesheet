@@ -28,19 +28,21 @@ class UserProfileController extends Controller
             'approver_position' => 'required',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+    
         if ($request->hasFile('signature')) {
-            // Simpan file di storage/app/public/signatures
-            $path = $request->file('signature')->store('signatures', 'public');
-
-            // Simpan ke kolom "signature_path"
-            $data['signature_path'] = $path;
+            $user = Auth::user();
+            $file = $request->file('signature');
+            $filename = 'signature_' . $user->id . '.' . $file->getClientOriginalExtension();
+    
+            // Simpan ke public/signatures
+            $file->move(public_path('signatures'), $filename);
+    
+            $data['signature_path'] = 'signatures/' . $filename;
         }
-
+    
         $data['user_id'] = Auth::id();
-
         UserProfile::create($data);
-
+    
         return redirect()->route('dashboard')->with('success', 'Profil berhasil disimpan.');
     }
 
@@ -63,23 +65,27 @@ class UserProfileController extends Controller
             'approver_name' => 'required',
             'approver_position' => 'required',
             'signature' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            
         ]);
-
+    
         $profile = UserProfile::where('user_id', Auth::id())->firstOrFail();
-
+    
         if ($request->hasFile('signature')) {
             // Hapus file lama jika ada
-            if ($profile->signature_path && Storage::disk('public')->exists($profile->signature_path)) {
-                Storage::disk('public')->delete($profile->signature_path);
+            $oldFile = public_path($profile->signature_path);
+            if ($profile->signature_path && file_exists($oldFile)) {
+                unlink($oldFile);
             }
-
-            $path = $request->file('signature')->store('signatures', 'public');
-            $data['signature_path'] = $path;
+    
+            $user = Auth::user();
+            $file = $request->file('signature');
+            $filename = 'signature_' . $user->id . '.' . $file->getClientOriginalExtension();
+    
+            $file->move(public_path('signatures'), $filename);
+            $data['signature_path'] = 'signatures/' . $filename;
         }
-
+    
         $profile->update($data);
-
+    
         return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
 
