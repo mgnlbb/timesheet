@@ -91,7 +91,7 @@
                         <h3 class="text-lg font-semibold text-gray-900 mt-3">Signature</h3>
                         @if ($profile->signature_path)
                             <div>
-                                <img src="{{ asset('storage/' . $profile->signature_path) }}" alt="Current Signature" class="h-24">
+                                <img src="{{ asset($profile->signature_path) }}" alt="Current Signature" class="h-24">
                             </div>
                         @endif
                         <div>
