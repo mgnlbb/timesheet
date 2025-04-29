@@ -117,7 +117,8 @@
         <tr>
             <td colspan="3" class="no-top-bottom-border signature-box">
                 @if($signaturePath)
-                    <img src="{{ public_path('storage/'. $signaturePath) }}" alt="Signature" width="100"><br>
+                    <img src="{{ base_path('public/images/'. $signaturePath) }}" alt="Signature" width="100"><br>
+                
                 @else
                     <span style="color: red;">(No signature)</span><br>
                 @endif
