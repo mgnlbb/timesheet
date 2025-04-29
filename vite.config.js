@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    base: '/build/', // tambahkan ini!
     plugins: [
         laravel({
             input: [
@@ -9,7 +10,6 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
-            assetUrl: 'https://timesheet-labib.up.railway.app',
         }),
     ],
 });
