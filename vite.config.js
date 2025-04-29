@@ -11,4 +11,13 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: true,
+        strictPort: true,
+        port: 5173,
+        hmr: {
+            host: 'timesheet-labib.up.railway.app',
+            protocol: 'wss',
+        },
+    },
 });
