@@ -31,7 +31,7 @@
             <th class="tg-left">Role</th>
             <td class="tg-center">{{ strtoupper($user->profile->role ?? '-' )}}</td>
             <td class="tg-left no-bottom-border" colspan="2" rowspan="3">
-                <img src="{{ public_path('storage/idstar.png') }}" alt="Image" width="100">
+                <img src="{{ base_path('public/images/idstar.png') }}" width="100" alt="Logo">
             </td>
         </tr>
         <tr>
@@ -118,9 +118,9 @@
             <td colspan="3" class="no-top-bottom-border signature-box">
                 @if($signaturePath)
                 <img src="{{ base_path('public/' . $signaturePath) }}" alt="Signature" width="100">
-                @else
-                    <span style="color: red;">(No signature)</span>
-                @endif            
+            @else
+                <span style="color: red;">(No signature)</span>
+            @endif
                 {{ $user->name }}
             </td>
             <td colspan="4" class="no-top-bottom-border signature-box"></td>
